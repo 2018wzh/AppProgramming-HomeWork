@@ -1,0 +1,218 @@
+{
+  "metadata": {
+    "name":"Test",
+    "time": 3
+  },
+  "questions": [
+    {
+      "question": "水在标准大气压下沸腾的温度是多少摄氏度？",
+      "options": [
+        {
+          "option": "A: 90°C",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 100°C",
+          "isCorrect": true
+        },
+        {
+          "option": "C: 110°C",
+          "isCorrect": false
+        },
+        {
+          "option": "D: 120°C",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "question": "世界上最长的河流是哪条？",
+      "options": [
+        {
+          "option": "A: 亚马逊河",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 尼罗河",
+          "isCorrect": true
+        },
+        {
+          "option": "C: 长江",
+          "isCorrect": false
+        },
+        {
+          "option": "D: 密西西比河",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "question": "中国历史上第一个皇帝是谁？",
+      "options": [
+        {
+          "option": "A: 汉武帝",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 秦始皇",
+          "isCorrect": true
+        },
+        {
+          "option": "C: 唐太宗",
+          "isCorrect": false
+        },
+        {
+          "option": "D: 宋太祖",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "question": "下列哪种维生素主要来自阳光照射？",
+      "options": [
+        {
+          "option": "A: 维生素A",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 维生素C",
+          "isCorrect": false
+        },
+        {
+          "option": "C: 维生素D",
+          "isCorrect": true
+        },
+        {
+          "option": "D: 维生素E",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "question": "地球的自转周期大约是多久？",
+      "options": [
+        {
+          "option": "A: 12小时",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 24小时",
+          "isCorrect": true
+        },
+        {
+          "option": "C: 30天",
+          "isCorrect": false
+        },
+        {
+          "option": "D: 365天",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "question": "《蒙娜丽莎》的作者是谁？",
+      "options": [
+        {
+          "option": "A: 梵高",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 毕加索",
+          "isCorrect": false
+        },
+        {
+          "option": "C: 达·芬奇",
+          "isCorrect": true
+        },
+        {
+          "option": "D: 米开朗基罗",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "question": "计算机存储容量的基本单位是什么？",
+      "options": [
+        {
+          "option": "A: 赫兹(Hz)",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 比特(bit)",
+          "isCorrect": false
+        },
+        {
+          "option": "C: 字节(Byte)",
+          "isCorrect": true
+        },
+        {
+          "option": "D: 像素(Pixel)",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "question": "哺乳动物最主要的特征是什么？",
+      "options": [
+        {
+          "option": "A: 卵生繁殖",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 用鳃呼吸",
+          "isCorrect": false
+        },
+        {
+          "option": "C: 恒温动物",
+          "isCorrect": false
+        },
+        {
+          "option": "D: 哺乳幼崽",
+          "isCorrect": true
+        }
+      ]
+    },
+    {
+      "question": "联合国总部位于哪座城市？",
+      "options": [
+        {
+          "option": "A: 日内瓦",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 纽约",
+          "isCorrect": true
+        },
+        {
+          "option": "C: 巴黎",
+          "isCorrect": false
+        },
+        {
+          "option": "D: 伦敦",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "question": "通常所说的\"北京时间\"实际上是什么时间？",
+      "options": [
+        {
+          "option": "A: 北京地方时",
+          "isCorrect": false
+        },
+        {
+          "option": "B: 东八区标准时",
+          "isCorrect": true
+        },
+        {
+          "option": "C: 世界标准时",
+          "isCorrect": false
+        },
+        {
+          "option": "D: 格林尼治时间",
+          "isCorrect": false
+        }
+      ]
+    }
+  ]
+}
