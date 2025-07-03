@@ -21,7 +21,8 @@ namespace HW
         public Spider()
         {
             InitializeComponent();
-
+            // 禁止调整大学
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             httpClient = new HttpClient();
             // 设置更完整的User-Agent和请求头来避免403错误
             httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv: 11.0) like Gecko");
@@ -72,7 +73,7 @@ namespace HW
             try
             {
                 await webView.EnsureCoreWebView2Async();
-                
+
                 // 添加导航完成事件
                 webView.CoreWebView2.NavigationCompleted += (sender, e) =>
                 {
@@ -103,7 +104,7 @@ namespace HW
             }
 
             int pages = (int)numericUpDown1.Value;
-            
+
             // 如果正在爬取，则取消
             if (cancellationTokenSource != null && !cancellationTokenSource.Token.IsCancellationRequested)
             {
@@ -112,7 +113,7 @@ namespace HW
                 labelStatus.Text = "状态：已取消";
                 return;
             }
-            
+
             cancellationTokenSource = new CancellationTokenSource();
             buttonStart.Text = "取消爬取";
             progressBar1.Value = 0;
@@ -132,13 +133,13 @@ namespace HW
                         labelStatus.Text = "状态：用户取消";
                         break;
                     }
-                    
+
                     string pageUrl = i == 1 ? currentForumUrl : $"{currentForumUrl}&pn={(i - 1) * 50}";
                     await ScrapePage(pageUrl);
                     progressBar1.Value = i;
                     labelStatus.Text = $"状态：第 {i}/{pages} 页完成";
                     Application.DoEvents();
-                    
+
                     await Task.Delay(Random.Shared.Next(1000, 3000), cancellationTokenSource.Token);
                 }
 
@@ -178,7 +179,7 @@ namespace HW
 
                 // 查找帖子列表容器
                 var threadNodes = doc.DocumentNode.SelectNodes("//li[contains(@class, 'j_thread_list')]");
-                
+
                 if (threadNodes != null)
                 {
                     foreach (var threadNode in threadNodes)
@@ -211,12 +212,12 @@ namespace HW
                 // 提取回复数
                 var replyNode = threadNode.SelectSingleNode(".//span[contains(@class, 'threadlist_rep_num')]");
                 // 提取创建时间
-                var createTimeNodes = threadNode.SelectSingleNode(".//span[contains(@class, 'is_show_create_time')]"); 
+                var createTimeNodes = threadNode.SelectSingleNode(".//span[contains(@class, 'is_show_create_time')]");
                 // 提取回复时间
                 var replyTimeNodes = threadNode.SelectSingleNode(".//span[contains(@class, 'threadlist_reply_date')]");
                 // 提取最后回复
                 var replyUser = threadNode.SelectSingleNode(".//span[contains(@class, 'tb_icon_author_rely')]");
-                
+
                 string title = titleNode.InnerText.Trim();
                 string author = authorNode.Attributes["title"]?.Value.Replace("主题作者: ", "");
                 string replyCount = replyNode?.InnerText.Trim() ?? "0";
@@ -252,14 +253,15 @@ namespace HW
 
             int rowIndex = dataGridView1.Rows.Add();
             DataGridViewRow row = dataGridView1.Rows[rowIndex];
-            
+
             row.Cells["ColumnTitle"].Value = postInfo.Title;
             row.Cells["ColumnAuthor"].Value = postInfo.Author;
             row.Cells["ColumnReplyCount"].Value = postInfo.ReplyCount;
             row.Cells["ColumnCreateTime"].Value = postInfo.CreateTime;
+            row.Cells["ColumnLastReplyUser"].Value = postInfo.LastReplyUser;
             row.Cells["ColumnLastReplyTime"].Value = postInfo.LastReplyTime;
             row.Cells["ColumnView"].Value = "查看";
-            
+
             // 存储URL到Tag中，供点击事件使用
             row.Tag = postInfo.Url;
         }
@@ -271,7 +273,7 @@ namespace HW
             {
                 var row = dataGridView1.Rows[e.RowIndex];
                 string url = row.Tag?.ToString();
-                
+
                 if (!string.IsNullOrEmpty(url))
                 {
                     await ShowPostInWebView(url);
@@ -289,16 +291,16 @@ namespace HW
                     dataGridView1.Visible = false;
                     webView.Visible = true;
                     isWebViewMode = true;
-                    
+
                     // 添加一个返回按钮（简单的实现）
                     this.Text = "百度贴吧爬虫 - 查看帖子 (双击返回列表)";
                 }
 
                 labelStatus.Text = "状态：正在加载帖子...";
-                
+
                 // 导航到帖子页面
                 webView.CoreWebView2.Navigate(url);
-                
+
                 labelStatus.Text = "状态：帖子已加载";
             }
             catch (Exception ex)
@@ -345,5 +347,25 @@ namespace HW
             }
         }
 
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {
+            string cookiePath = null;
+            string cookie = null;
+            openFileDialog1.Filter = "Cookie文件 (*.txt)|*.txt|所有文件 (*.*)|*.*";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                cookiePath = openFileDialog1.FileName;
+                try
+                {
+                    cookie = System.IO.File.ReadAllText(cookiePath);
+                    httpClient.DefaultRequestHeaders.Add("Cookie", cookie);
+                    MessageBox.Show("Cookie加载成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"加载Cookie失败：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }

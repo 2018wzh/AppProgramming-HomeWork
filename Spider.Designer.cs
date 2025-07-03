@@ -36,13 +36,16 @@
             progressBar1 = new ProgressBar();
             labelStatus = new Label();
             dataGridView1 = new DataGridView();
+            webView = new Microsoft.Web.WebView2.WinForms.WebView2();
+            buttonLoad = new Button();
+            openFileDialog1 = new OpenFileDialog();
             ColumnTitle = new DataGridViewTextBoxColumn();
-            ColumnAuthor = new DataGridViewTextBoxColumn();
             ColumnReplyCount = new DataGridViewTextBoxColumn();
+            ColumnAuthor = new DataGridViewTextBoxColumn();
+            ColumnLastReplyUser = new DataGridViewTextBoxColumn();
             ColumnCreateTime = new DataGridViewTextBoxColumn();
             ColumnLastReplyTime = new DataGridViewTextBoxColumn();
             ColumnView = new DataGridViewButtonColumn();
-            webView = new Microsoft.Web.WebView2.WinForms.WebView2();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView).BeginInit();
@@ -51,16 +54,16 @@
             // textBoxInput
             // 
             textBoxInput.Location = new Point(6, 7);
-            textBoxInput.Margin = new Padding(2, 2, 2, 2);
+            textBoxInput.Margin = new Padding(2);
             textBoxInput.Name = "textBoxInput";
             textBoxInput.PlaceholderText = "请输入贴吧名称，例如：编程";
-            textBoxInput.Size = new Size(534, 23);
+            textBoxInput.Size = new Size(445, 23);
             textBoxInput.TabIndex = 0;
             // 
             // numericUpDown1
             // 
-            numericUpDown1.Location = new Point(540, 7);
-            numericUpDown1.Margin = new Padding(2, 2, 2, 2);
+            numericUpDown1.Location = new Point(455, 7);
+            numericUpDown1.Margin = new Padding(2);
             numericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(85, 23);
@@ -69,8 +72,8 @@
             // 
             // buttonStart
             // 
-            buttonStart.Location = new Point(628, 3);
-            buttonStart.Margin = new Padding(2, 2, 2, 2);
+            buttonStart.Location = new Point(549, 6);
+            buttonStart.Margin = new Padding(2);
             buttonStart.Name = "buttonStart";
             buttonStart.Size = new Size(75, 25);
             buttonStart.TabIndex = 2;
@@ -82,7 +85,7 @@
             // 
             labelPages.AutoSize = true;
             labelPages.ForeColor = SystemColors.GrayText;
-            labelPages.Location = new Point(562, 30);
+            labelPages.Location = new Point(481, 33);
             labelPages.Margin = new Padding(2, 0, 2, 0);
             labelPages.Name = "labelPages";
             labelPages.Size = new Size(32, 17);
@@ -104,7 +107,7 @@
             // progressBar1
             // 
             progressBar1.Location = new Point(6, 512);
-            progressBar1.Margin = new Padding(2, 2, 2, 2);
+            progressBar1.Margin = new Padding(2);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(698, 25);
             progressBar1.TabIndex = 5;
@@ -122,14 +125,42 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ColumnTitle, ColumnAuthor, ColumnReplyCount, ColumnCreateTime, ColumnLastReplyTime, ColumnView });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ColumnTitle, ColumnReplyCount, ColumnAuthor, ColumnLastReplyUser, ColumnCreateTime, ColumnLastReplyTime, ColumnView });
             dataGridView1.Location = new Point(6, 52);
-            dataGridView1.Margin = new Padding(2, 2, 2, 2);
+            dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 82;
             dataGridView1.Size = new Size(698, 457);
             dataGridView1.TabIndex = 7;
             dataGridView1.CellClick += DataGridView1_CellClick;
+            // 
+            // webView
+            // 
+            webView.AllowExternalDrop = true;
+            webView.CreationProperties = null;
+            webView.DefaultBackgroundColor = Color.White;
+            webView.Location = new Point(6, 52);
+            webView.Margin = new Padding(2);
+            webView.Name = "webView";
+            webView.Size = new Size(698, 457);
+            webView.TabIndex = 8;
+            webView.Visible = false;
+            webView.ZoomFactor = 1D;
+            webView.DoubleClick += WebView_DoubleClick;
+            // 
+            // buttonLoad
+            // 
+            buttonLoad.Location = new Point(629, 7);
+            buttonLoad.Name = "buttonLoad";
+            buttonLoad.Size = new Size(75, 23);
+            buttonLoad.TabIndex = 9;
+            buttonLoad.Text = "加载";
+            buttonLoad.UseVisualStyleBackColor = true;
+            buttonLoad.Click += buttonLoad_Click;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
             // 
             // ColumnTitle
             // 
@@ -138,32 +169,35 @@
             ColumnTitle.ReadOnly = true;
             ColumnTitle.Width = 400;
             // 
-            // ColumnAuthor
-            // 
-            ColumnAuthor.HeaderText = "作者";
-            ColumnAuthor.Name = "ColumnAuthor";
-            ColumnAuthor.ReadOnly = true;
-            ColumnAuthor.Width = 150;
-            // 
             // ColumnReplyCount
             // 
             ColumnReplyCount.HeaderText = "回复数";
             ColumnReplyCount.Name = "ColumnReplyCount";
             ColumnReplyCount.ReadOnly = true;
             // 
+            // ColumnAuthor
+            // 
+            ColumnAuthor.HeaderText = "作者";
+            ColumnAuthor.Name = "ColumnAuthor";
+            ColumnAuthor.ReadOnly = true;
+            // 
+            // ColumnLastReplyUser
+            // 
+            ColumnLastReplyUser.HeaderText = "最后回复";
+            ColumnLastReplyUser.Name = "ColumnLastReplyUser";
+            ColumnLastReplyUser.ReadOnly = true;
+            // 
             // ColumnCreateTime
             // 
             ColumnCreateTime.HeaderText = "创建时间";
             ColumnCreateTime.Name = "ColumnCreateTime";
             ColumnCreateTime.ReadOnly = true;
-            ColumnCreateTime.Width = 200;
             // 
             // ColumnLastReplyTime
             // 
-            ColumnLastReplyTime.HeaderText = "最后回复";
+            ColumnLastReplyTime.HeaderText = "回复时间";
             ColumnLastReplyTime.Name = "ColumnLastReplyTime";
             ColumnLastReplyTime.ReadOnly = true;
-            ColumnLastReplyTime.Width = 200;
             // 
             // ColumnView
             // 
@@ -172,26 +206,12 @@
             ColumnView.Text = "查看";
             ColumnView.UseColumnTextForButtonValue = true;
             // 
-            // webView
-            // 
-            webView.AllowExternalDrop = true;
-            webView.CreationProperties = null;
-            webView.DefaultBackgroundColor = Color.White;
-            webView.Location = new Point(6, 52);
-            webView.Margin = new Padding(2, 2, 2, 2);
-            webView.Name = "webView";
-            webView.Size = new Size(698, 457);
-            webView.TabIndex = 8;
-            webView.Visible = false;
-            webView.ZoomFactor = 1D;
-            webView.DoubleClick += WebView_DoubleClick;
-            // 
             // Spider
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(710, 561);
-            Controls.Add(webView);
+            Controls.Add(buttonLoad);
             Controls.Add(dataGridView1);
             Controls.Add(labelStatus);
             Controls.Add(progressBar1);
@@ -200,7 +220,8 @@
             Controls.Add(buttonStart);
             Controls.Add(numericUpDown1);
             Controls.Add(textBoxInput);
-            Margin = new Padding(2, 2, 2, 2);
+            Controls.Add(webView);
+            Margin = new Padding(2);
             Name = "Spider";
             Text = "百度贴吧爬虫";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
@@ -221,9 +242,12 @@
         private Label labelStatus;
         private DataGridView dataGridView1;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView;
+        private Button buttonLoad;
+        private OpenFileDialog openFileDialog1;
         private DataGridViewTextBoxColumn ColumnTitle;
-        private DataGridViewTextBoxColumn ColumnAuthor;
         private DataGridViewTextBoxColumn ColumnReplyCount;
+        private DataGridViewTextBoxColumn ColumnAuthor;
+        private DataGridViewTextBoxColumn ColumnLastReplyUser;
         private DataGridViewTextBoxColumn ColumnCreateTime;
         private DataGridViewTextBoxColumn ColumnLastReplyTime;
         private DataGridViewButtonColumn ColumnView;
