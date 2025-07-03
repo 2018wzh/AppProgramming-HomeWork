@@ -1,7 +1,7 @@
 using System.Numerics;
 using Newtonsoft.Json;
 
-namespace HW1
+namespace HW
 {
     public partial class QuizApp : Form
     {
