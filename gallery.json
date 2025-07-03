@@ -1,0 +1,45 @@
+{
+  "metadata": {
+    "name": "CPU Gallery"
+  },
+  "gallery": [
+    {
+      "title": "Intel",
+      "data": [
+        {
+          "title": "Core",
+          "url": [
+            "https://bkimg.cdn.bcebos.com/pic/9f2f070828381f30e924f6791a565b086e061c955a91",
+            "https://bkimg.cdn.bcebos.com/pic/359b033b5bb5c9ea15cef4d5a975a1003af33a8715fa"
+          ]
+        },
+        {
+          "title": "Pentium",
+          "url": [
+            "https://bkimg.cdn.bcebos.com/pic/b17eca8065380cd79123aac3b216ba345982b2b72bd9",
+            "https://bkimg.cdn.bcebos.com/pic/d788d43f8794a4c27d1e19a5e3bb0cd5ad6edcc493a7"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "AMD",
+      "data": [
+        {
+          "title": "Ryzen",
+          "url": [
+            "https://bkimg.cdn.bcebos.com/pic/203fb80e7bec54e736d1ed5e1c6e8c504fc2d5623c6e",
+            "https://bkimg.cdn.bcebos.com/pic/09fa513d269759ee0817a12ab8fb43166c22df88"
+          ]
+        },
+        {
+          "title": "Epyc",
+          "url": [
+            "https://bkimg.cdn.bcebos.com/pic/728da9773912b31b4d1cfa998c18367adab4e10a",
+            "https://bkimg.cdn.bcebos.com/pic/58ee3d6d55fbb2fbb52c591f434a20a44623dcbc"
+          ]
+        }
+      ]
+    }
+  ]
+}
