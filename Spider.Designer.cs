@@ -46,6 +46,7 @@
             ColumnCreateTime = new DataGridViewTextBoxColumn();
             ColumnLastReplyTime = new DataGridViewTextBoxColumn();
             ColumnView = new DataGridViewButtonColumn();
+            buttonLogin = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView).BeginInit();
@@ -57,12 +58,12 @@
             textBoxInput.Margin = new Padding(2);
             textBoxInput.Name = "textBoxInput";
             textBoxInput.PlaceholderText = "请输入贴吧名称，例如：编程";
-            textBoxInput.Size = new Size(445, 23);
+            textBoxInput.Size = new Size(369, 23);
             textBoxInput.TabIndex = 0;
             // 
             // numericUpDown1
             // 
-            numericUpDown1.Location = new Point(455, 7);
+            numericUpDown1.Location = new Point(379, 7);
             numericUpDown1.Margin = new Padding(2);
             numericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
@@ -72,7 +73,7 @@
             // 
             // buttonStart
             // 
-            buttonStart.Location = new Point(549, 6);
+            buttonStart.Location = new Point(468, 5);
             buttonStart.Margin = new Padding(2);
             buttonStart.Name = "buttonStart";
             buttonStart.Size = new Size(75, 25);
@@ -85,7 +86,7 @@
             // 
             labelPages.AutoSize = true;
             labelPages.ForeColor = SystemColors.GrayText;
-            labelPages.Location = new Point(481, 33);
+            labelPages.Location = new Point(405, 33);
             labelPages.Margin = new Padding(2, 0, 2, 0);
             labelPages.Name = "labelPages";
             labelPages.Size = new Size(32, 17);
@@ -97,7 +98,7 @@
             // 
             labelName.AutoSize = true;
             labelName.ForeColor = SystemColors.GrayText;
-            labelName.Location = new Point(251, 33);
+            labelName.Location = new Point(162, 33);
             labelName.Margin = new Padding(2, 0, 2, 0);
             labelName.Name = "labelName";
             labelName.Size = new Size(56, 17);
@@ -150,9 +151,9 @@
             // 
             // buttonLoad
             // 
-            buttonLoad.Location = new Point(629, 7);
+            buttonLoad.Location = new Point(548, 4);
             buttonLoad.Name = "buttonLoad";
-            buttonLoad.Size = new Size(75, 23);
+            buttonLoad.Size = new Size(75, 26);
             buttonLoad.TabIndex = 9;
             buttonLoad.Text = "加载";
             buttonLoad.UseVisualStyleBackColor = true;
@@ -206,11 +207,22 @@
             ColumnView.Text = "查看";
             ColumnView.UseColumnTextForButtonValue = true;
             // 
+            // buttonLogin
+            // 
+            buttonLogin.Location = new Point(629, 4);
+            buttonLogin.Name = "buttonLogin";
+            buttonLogin.Size = new Size(75, 26);
+            buttonLogin.TabIndex = 10;
+            buttonLogin.Text = "登录";
+            buttonLogin.UseVisualStyleBackColor = true;
+            buttonLogin.Click += buttonLogin_Click;
+            // 
             // Spider
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(710, 561);
+            Controls.Add(buttonLogin);
             Controls.Add(buttonLoad);
             Controls.Add(dataGridView1);
             Controls.Add(labelStatus);
@@ -251,5 +263,6 @@
         private DataGridViewTextBoxColumn ColumnCreateTime;
         private DataGridViewTextBoxColumn ColumnLastReplyTime;
         private DataGridViewButtonColumn ColumnView;
+        private Button buttonLogin;
     }
 }

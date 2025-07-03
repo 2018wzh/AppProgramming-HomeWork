@@ -367,5 +367,83 @@ namespace HW
                 }
             }
         }
+
+        private void buttonLogin_Click(object sender, EventArgs e)
+        {
+            // 登录获取cookie
+            try
+            {
+                // 确保WebView2已初始化
+                webView.EnsureCoreWebView2Async();
+                
+                // 切换到WebView模式显示登录页面
+                if (!isWebViewMode)
+                {
+                    dataGridView1.Visible = false;
+                    webView.Visible = true;
+                    isWebViewMode = true;
+                    this.Text = "百度贴吧爬虫 - 登录 (登录后双击返回)";
+                }
+                
+                labelStatus.Text = "状态：正在打开登录页面...";
+                
+                // 导航到百度登录页面
+                webView.CoreWebView2.Navigate("https://passport.baidu.com/v2/?login");
+                
+                // 添加导航完成事件处理
+                webView.CoreWebView2.NavigationCompleted += async (s, args) =>
+                {
+                    if (args.IsSuccess)
+                    {
+                        // 检查是否已经登录成功（通过URL判断）
+                        string currentUrl = webView.CoreWebView2.Source;
+                        if (currentUrl.Contains("tieba.baidu.com") || currentUrl.Contains("passport.baidu.com") && !currentUrl.Contains("login"))
+                        {
+                            try
+                            {
+                                // 获取Cookie
+                                var cookies = await webView.CoreWebView2.CookieManager.GetCookiesAsync("https://tieba.baidu.com");
+                                if (cookies.Count > 0)
+                                {
+                                    // 清除现有的Cookie请求头
+                                    httpClient.DefaultRequestHeaders.Remove("Cookie");
+                                    
+                                    // 构建Cookie字符串
+                                    var cookieBuilder = new StringBuilder();
+                                    foreach (var cookie in cookies)
+                                    {
+                                        cookieBuilder.Append($"{cookie.Name}={cookie.Value}; ");
+                                    }
+                                    
+                                    string cookieString = cookieBuilder.ToString().TrimEnd(' ', ';');
+                                    httpClient.DefaultRequestHeaders.Add("Cookie", cookieString);
+                                    
+                                    labelStatus.Text = "状态：登录成功，Cookie已获取";
+                                    MessageBox.Show("登录成功！Cookie已自动应用到爬虫中。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"获取Cookie失败：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                labelStatus.Text = "状态：获取Cookie失败";
+                            }
+                        }
+                        else
+                        {
+                            labelStatus.Text = "状态：请在页面中完成登录";
+                        }
+                    }
+                    else
+                    {
+                        labelStatus.Text = "状态：登录页面加载失败";
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"打开登录页面失败：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                labelStatus.Text = "状态：打开登录页面失败";
+            }
+        }
     }
 }
