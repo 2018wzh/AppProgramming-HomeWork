@@ -20,7 +20,8 @@ namespace HW
         List<string> items = new List<string>
         {
             "Quiz",
-            "Gallery"
+            "Gallery",
+            "Spider"
         };
         private int currentIndex = 0;
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -41,6 +42,11 @@ namespace HW
                     this.Hide();
                     var gallery = new Gallery();
                     gallery.ShowDialog();
+                    break;
+                case 2:
+                    this.Hide();
+                    var spider = new Spider();
+                    spider.ShowDialog();
                     break;
                 default:
                     MessageBox.Show("Please select a valid option.");
