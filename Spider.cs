@@ -12,6 +12,8 @@ using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using System.Net.Http;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace HW
 {
@@ -21,7 +23,7 @@ namespace HW
         public Spider()
         {
             InitializeComponent();
-            // 禁止调整大学
+            // 禁止调整
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             httpClient = new HttpClient();
             // 设置更完整的User-Agent和请求头来避免403错误
@@ -375,7 +377,7 @@ namespace HW
             {
                 // 确保WebView2已初始化
                 webView.EnsureCoreWebView2Async();
-                
+
                 // 切换到WebView模式显示登录页面
                 if (!isWebViewMode)
                 {
@@ -384,12 +386,12 @@ namespace HW
                     isWebViewMode = true;
                     this.Text = "百度贴吧爬虫 - 登录 (登录后双击返回)";
                 }
-                
+
                 labelStatus.Text = "状态：正在打开登录页面...";
-                
+
                 // 导航到百度登录页面
                 webView.CoreWebView2.Navigate("https://passport.baidu.com/v2/?login");
-                
+
                 // 添加导航完成事件处理
                 webView.CoreWebView2.NavigationCompleted += async (s, args) =>
                 {
@@ -407,17 +409,17 @@ namespace HW
                                 {
                                     // 清除现有的Cookie请求头
                                     httpClient.DefaultRequestHeaders.Remove("Cookie");
-                                    
+
                                     // 构建Cookie字符串
                                     var cookieBuilder = new StringBuilder();
                                     foreach (var cookie in cookies)
                                     {
                                         cookieBuilder.Append($"{cookie.Name}={cookie.Value}; ");
                                     }
-                                    
+
                                     string cookieString = cookieBuilder.ToString().TrimEnd(' ', ';');
                                     httpClient.DefaultRequestHeaders.Add("Cookie", cookieString);
-                                    
+
                                     labelStatus.Text = "状态：登录成功，Cookie已获取";
                                     MessageBox.Show("登录成功！Cookie已自动应用到爬虫中。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
@@ -443,6 +445,39 @@ namespace HW
             {
                 MessageBox.Show($"打开登录页面失败：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 labelStatus.Text = "状态：打开登录页面失败";
+            }
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            if (posts == null || posts.Count == 0)
+            {
+                MessageBox.Show("没有数据可以导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            saveFileDialog1.Filter = "JSON文件 (*.json)|*.json|所有文件 (*.*)|*.*";
+            saveFileDialog1.DefaultExt = "json";
+            saveFileDialog1.FileName = $"贴吧数据_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    labelStatus.Text = "状态：正在导出数据...";
+
+                    string jsonData = JsonConvert.SerializeObject(posts, Formatting.Indented);
+                    File.WriteAllText(saveFileDialog1.FileName, jsonData, Encoding.UTF8);
+
+                    labelStatus.Text = $"状态：导出完成 - 共 {posts.Count} 条数据";
+                    MessageBox.Show($"数据导出成功！\n文件路径：{saveFileDialog1.FileName}\n共导出 {posts.Count} 条帖子数据",
+                        "导出成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"导出失败：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    labelStatus.Text = "状态：导出失败";
+                }
             }
         }
     }
