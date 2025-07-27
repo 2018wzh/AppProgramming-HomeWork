@@ -49,11 +49,11 @@ namespace HW
                 string salt;
                 string hashedPassword = PasswordHelper.CreateHash(textBoxPassword.Text, out salt);
 
-                string sql = string.Format(@"INSERT INTO tblTopStudents (id, studentNo, studentname, gender, Major, Intro, Phone, Province, birthday, pwd, salt, LoginTimes, Status) 
-                                             VALUES ({0}, '{1}', '{2}', {3}, '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', 0, 1)",
+                string sql = string.Format(@"INSERT INTO tblTopStudents (id, studentNo, studentname, gender, Major, Intro, Phone, Province, birthday, pwd, salt, LoginTimes, Status, QQ, Email) 
+                                             VALUES ({0}, '{1}', '{2}', {3}, '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', 0, 1, '{11}', '{12}')",
                                              id, textBoxStudentNo.Text, textBoxStudentName.Text, gender, textBoxMajor.Text,
                                              textBoxIntro.Text, textBoxPhone.Text, textBoxProvince.Text, dateTimePickerBirthday.Value.ToString("yyyy-MM-dd"),
-                                             hashedPassword, salt);
+                                             hashedPassword, salt, textBoxQQ.Text, textBoxEmail.Text);
 
                 int ret = sh.RunSQL(sql);
                 if (ret > 0)

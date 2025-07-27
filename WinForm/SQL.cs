@@ -19,7 +19,7 @@ namespace HW
         private string base_sql = @"select studentNo as 学号, studentname as 姓名,CASE gender WHEN 1 THEN '男' 
                       WHEN 0 THEN '女' 
                       ELSE '其他' 
-         END as 性别,Major as 专业,Intro as 简介,Phone as 手机,Province as 省份,LoginTimes as 登录次数 from tblTopStudents where 1=1";
+         END as 性别,Major as 专业,Intro as 简介,Phone as 手机,Province as 省份,LoginTimes as 登录次数,QQ as qq, email as 邮箱 from tblTopStudents where 1=1";
 
         public SQL()
         {
@@ -70,7 +70,9 @@ namespace HW
                 "简介",
                 "手机",
                 "省份",
-                "登录次数"
+                "登录次数",
+                "qq",
+                "邮箱"
             };
             comboBoxData.DataSource = classNames;
             comboBoxData.Text = "全部显示";
@@ -121,7 +123,7 @@ namespace HW
 
             if (filterField == "全部显示")
             {
-                sql += string.Format(" and (studentNo like '%{0}%' or studentname like '%{0}%' or Major like '%{0}%' or Intro like '%{0}%' or Phone like '%{0}%' or Province like '%{0}%')", filterValue);
+                sql += string.Format(" and (studentNo like '%{0}%' or studentname like '%{0}%' or Major like '%{0}%' or Intro like '%{0}%' or Phone like '%{0}%' or Province like '%{0}%' or QQ like '%{0}%' or email like '%{0}%')", filterValue);
             }
             else
             {
@@ -148,6 +150,12 @@ namespace HW
                         break;
                     case "登录次数":
                         dbField = "LoginTimes";
+                        break;
+                    case "qq":
+                        dbField = "QQ";
+                        break;
+                    case "邮箱":
+                        dbField = "email";
                         break;
                     case "性别":
                         if (filterValue == "男")
@@ -203,7 +211,7 @@ namespace HW
                     DataGridViewRow row = dataGridView1.SelectedRows[0];
                     string? studentNo = row.Cells["学号"].Value.ToString();
 
-                    string[] fields = { "姓名", "性别", "专业", "简介", "手机", "省份" };
+                    string[] fields = { "姓名", "性别", "专业", "简介", "手机", "省份", "qq", "邮箱" };
                     string fieldToUpdate = Interaction.InputBox("请选择要修改的字段: " + string.Join(", ", fields), "选择字段");
 
                     if (string.IsNullOrWhiteSpace(fieldToUpdate) || !fields.Contains(fieldToUpdate))
@@ -222,6 +230,8 @@ namespace HW
                         case "简介": dbField = "Intro"; currentValue = row.Cells["简介"].Value.ToString(); break;
                         case "手机": dbField = "Phone"; currentValue = row.Cells["手机"].Value.ToString(); break;
                         case "省份": dbField = "Province"; currentValue = row.Cells["省份"].Value.ToString(); break;
+                        case "qq": dbField = "qq"; currentValue = row.Cells["qq"].Value.ToString(); break;
+                        case "邮箱": dbField = "email"; currentValue = row.Cells["邮箱"].Value.ToString(); break;
                     }
 
                     string newValue = Interaction.InputBox($"请输入新的 {fieldToUpdate}:", $"修改 {fieldToUpdate}", currentValue ?? "");

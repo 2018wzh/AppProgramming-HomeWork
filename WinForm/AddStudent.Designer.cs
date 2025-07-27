@@ -50,6 +50,10 @@
             this.dateTimePickerBirthday = new System.Windows.Forms.DateTimePicker();
             this.labelPassword = new System.Windows.Forms.Label();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.labelQQ = new System.Windows.Forms.Label();
+            this.textBoxQQ = new System.Windows.Forms.TextBox();
+            this.labelEmail = new System.Windows.Forms.Label();
+            this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelId
@@ -217,29 +221,65 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(60, 420);
+            this.buttonSave.Location = new System.Drawing.Point(60, 480);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 20;
+            this.buttonSave.TabIndex = 24;
             this.buttonSave.Text = "保存";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(180, 420);
+            this.buttonCancel.Location = new System.Drawing.Point(180, 480);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 21;
+            this.buttonCancel.TabIndex = 25;
             this.buttonCancel.Text = "取消";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // labelQQ
+            // 
+            this.labelQQ.AutoSize = true;
+            this.labelQQ.Location = new System.Drawing.Point(30, 410);
+            this.labelQQ.Name = "labelQQ";
+            this.labelQQ.Size = new System.Drawing.Size(35, 17);
+            this.labelQQ.TabIndex = 20;
+            this.labelQQ.Text = "QQ:";
+            // 
+            // textBoxQQ
+            // 
+            this.textBoxQQ.Location = new System.Drawing.Point(100, 407);
+            this.textBoxQQ.Name = "textBoxQQ";
+            this.textBoxQQ.Size = new System.Drawing.Size(200, 23);
+            this.textBoxQQ.TabIndex = 21;
+            // 
+            // labelEmail
+            // 
+            this.labelEmail.AutoSize = true;
+            this.labelEmail.Location = new System.Drawing.Point(30, 440);
+            this.labelEmail.Name = "labelEmail";
+            this.labelEmail.Size = new System.Drawing.Size(43, 17);
+            this.labelEmail.TabIndex = 22;
+            this.labelEmail.Text = "邮箱:";
+            // 
+            // textBoxEmail
+            // 
+            this.textBoxEmail.Location = new System.Drawing.Point(100, 437);
+            this.textBoxEmail.Name = "textBoxEmail";
+            this.textBoxEmail.Size = new System.Drawing.Size(200, 23);
+            this.textBoxEmail.TabIndex = 23;
             // 
             // AddStudent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 461);
+            this.ClientSize = new System.Drawing.Size(334, 521);
+            this.Controls.Add(this.textBoxEmail);
+            this.Controls.Add(this.labelEmail);
+            this.Controls.Add(this.textBoxQQ);
+            this.Controls.Add(this.labelQQ);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.dateTimePickerBirthday);
@@ -293,5 +333,9 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerBirthday;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.TextBox textBoxPassword;
+        private System.Windows.Forms.Label labelQQ;
+        private System.Windows.Forms.TextBox textBoxQQ;
+        private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.TextBox textBoxEmail;
     }
 }
