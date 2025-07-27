@@ -1,9 +1,9 @@
 using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Configuration;
 using System.ComponentModel;
-
+using Newtonsoft.Json;
 namespace SQL
 {
 	/// <summary>
@@ -16,17 +16,47 @@ namespace SQL
 		/// 连接数据源
 		private SqlConnection? myConnection = null;
 		private readonly string RETURNVALUE = "RETURNVALUE";
-
-		/// <summary>
-		/// 打开数据库连接.
-		/// </summary>
-		private void Open() 
+		private string address, username, password, dbname;
+		private void LoadConfig()
 		{
-			// 打开数据库连接
-			if (myConnection == null) 
+			string json = System.IO.File.ReadAllText("db.json");
+			try
 			{
-                myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString.ToString());				
-			}				
+				var jsonData = JsonConvert.DeserializeAnonymousType(json, new
+				{
+					address = "",
+					username = "",
+					password = "",
+					dbname = ""
+				});
+				address = jsonData.address;
+				username = jsonData.username;
+				password = jsonData.password;
+				dbname = jsonData.dbname;
+			}
+			catch (JsonException)
+			{
+				throw new Exception("配置文件格式错误，请检查 config.json 文件。");
+			}
+        }
+        /// <summary>
+        /// 打开数据库连接.
+        /// </summary>
+        private void Open() 
+		{
+			LoadConfig();
+            // 打开数据库连接
+            if (myConnection == null) 
+			{
+				///创建数据库连接
+				myConnection = new SqlConnection(
+					$"Data Source={address};Initial Catalog={dbname};User ID={username};Password={password};");
+			}
+			else if (myConnection.State == ConnectionState.Broken)
+			{
+				///如果连接状态为Broken，则重新打开连接
+				myConnection.Close();
+            }				
 			if(myConnection.State == ConnectionState.Closed)
 			{   
 				try
