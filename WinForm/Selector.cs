@@ -21,7 +21,10 @@ namespace HW
         {
             "Quiz",
             "Gallery",
-            "Spider"
+            "Spider",
+            "NER",
+            "SQL",
+            "Login"
         };
         private int currentIndex = 0;
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -47,6 +50,21 @@ namespace HW
                     this.Hide();
                     var spider = new Spider();
                     spider.ShowDialog();
+                    break;
+                case 3:
+                    this.Hide();
+                    var ner = new NER();
+                    ner.ShowDialog();
+                    break;
+                case 4:
+                    this.Hide();
+                    var sql = new SQL();
+                    sql.ShowDialog();
+                    break;
+                case 5:
+                    this.Hide();
+                    var login = new Login();
+                    login.ShowDialog();
                     break;
                 default:
                     MessageBox.Show("Please select a valid option.");
