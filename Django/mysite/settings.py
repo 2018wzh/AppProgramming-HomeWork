@@ -77,21 +77,21 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.sqlite3",
-    #     "NAME": BASE_DIR / "db.sqlite3",
-    # }
+    "default": {
+         "ENGINE": "django.db.backends.sqlite3",
+         "NAME": BASE_DIR / "db.sqlite3",
+    }
     #配置数据库前，先安装下 连接器  pip install pymysql
     # pip install mysqlclient
 
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "stu", #数据库名称,需要先在数据库中创建Schema
-        "USER": "stu", #可以使用root
-        "PASSWORD": "123456",
-        "HOST": "202.120.84.196", #localhost
-        "PORT": "3306",
-    }
+    # "default": {
+    #    "ENGINE": "django.db.backends.mysql",
+    #    "NAME": "stu", #数据库名称,需要先在数据库中创建Schema
+    #    "USER": "stu", #可以使用root
+    #    "PASSWORD": "123456",
+    #    "HOST": "localhost", #localhost
+    #    "PORT": "3306",
+    # }
 }
 
 
