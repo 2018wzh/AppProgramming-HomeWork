@@ -9,12 +9,36 @@ from django.contrib.auth.hashers import make_password,check_password
 # 正确的导入方式
 from datetime import datetime
 # Create your views here.
+def check_reg(username,email):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id FROM userModel_Reguser WHERE username = %s",
+                (username,)
+            )
+            row = cursor.fetchone()
+            if row is not None:
+                return "<p>用户名已存在！</p>"
+            cursor.execute(
+                "SELECT id FROM userModel_Reguser WHERE email = %s",
+                (email,)
+            )
+            row = cursor.fetchone()
+            if row is not None:
+                return "<p>邮箱已存在！</p>"
+            return True
+    except Exception as e:
+        print(f"查询异常: {e}")
+        return False
 # 接收请求数据，以执行SQL地方式插入到数据库中
 def reg_withSQL(request):  
     insert_sql,ctx=getInsertRegSQLAndDict(request)  #赋值的解压缩
     if(insert_sql=="" or ctx=={}):
         return HttpResponse("<p>用户注册失败！</p>")
     try:
+        res = check_reg(ctx['username'], ctx['email'])
+        if res is not True:
+           return HttpResponse(res)
         with connection.cursor() as cursor:
             # cursor.execute(sql, params)
             cursor.execute(insert_sql)
@@ -31,6 +55,10 @@ def reg_withORM(request):
    if(insert_sql=="" or ctx=={}):
        return HttpResponse("<p>用户注册失败！</p>")
    try:
+       res = check_reg(ctx['username'], ctx['email'])
+       if res is not True:
+           return HttpResponse(res)
+        # 2. 使用ORM创建用户
        regUser.objects.create(**ctx)
        print("注册成功！") #控制台打印输出
    except Exception as e:
@@ -53,12 +81,13 @@ def getInsertRegSQLAndDict(request):
             ctx['gender'] = request.POST['gender']
             ctx['birthdate'] = request.POST['birthdate']
             ctx['nativePlace'] = request.POST['nativePlace']
+            ctx['qq'] = request.POST['qq']
             ctx['regdate'] =datetime.now() 
             ctx['logintimes'] = 0
             ctx['lastlogin'] = datetime.now()  # 增加一个字段，记录用户最后登录时间
-            strSQL = "insert into usermodel_reguser(username,email,password,gender,birthdate,nativePlace,regdate,lastlogin,logintimes)values('%s','%s','%s','%s','%s','%s','%s',%s,%s)" % (
+            strSQL = "insert into usermodel_reguser(username,email,password,gender,birthdate,nativePlace,qq,regdate,lastlogin,logintimes)values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" % (
                 ctx['username'], ctx['email'], ctx['password'], ctx['gender'],
-                ctx['birthdate'], ctx['nativePlace'], ctx['regdate'], ctx['lastlogin'], ctx['logintimes']
+                ctx['birthdate'], ctx['nativePlace'], ctx['qq'], ctx['regdate'], ctx['lastlogin'], ctx['logintimes']
             )
             print(strSQL)  # 控制台打印输出,这个不会在WEB页输出的！！！！！！！！
     else:
@@ -127,6 +156,6 @@ def login_withORM(request):
       user.save(update_fields=['logintimes','lastlogin'])   #掌握ORM更新的方法
       print("login success")
       #return HttpResponse("<p>登录成功！</p>")               
-      return render(request,'user_profile.html', {'username': user.username, 'email': user.email, 'regdate': user.regdate, 'lastlogin': user.lastlogin, 'logintimes': user.logintimes})
+      return render(request,'user_profile.html', {'username': user.username, 'email': user.email, 'regdate': user.regdate, 'lastlogin': user.lastlogin, 'logintimes': user.logintimes, 'qq': user.qq, 'gender': user.gender, 'birthdate': user.birthdate, 'nativePlace': user.nativePlace})
    else:
       return render(request, 'login.html', {'error': '请不用使用爬虫！'})      

@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户中心</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: #333; }
-        .profile { max-width: 600px; margin: 50px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .profile h1 { margin-bottom: 20px; font-size: 1.8rem; color: #007ACC; }
-        dl { margin: 0; }
-        dt { font-weight: bold; margin-top: 10px; }
-        dd { margin: 0 0 10px 20px; }
-    </style>
+    <link href="{% static 'materialize.min.css' %}" rel="stylesheet">
 </head>
-<body>
-    <div class="profile">
-        <h1>欢迎, {{ username }}</h1>
-        <dl>
-            <dt>邮箱：</dt><dd>{{ email }}</dd>
-            <dt>注册时间：</dt><dd>{{ regdate }}</dd>
-            <dt>最后登录：</dt><dd>{{ lastlogin }}</dd>
-            <dt>登录次数：</dt><dd>{{ logintimes }}</dd>
-            <dt>QQ：</dt><dd>{{ qq }}</dd>
-            <dt>性别：</dt><dd>{{ gender }}</dd>
-            <dt>出生日期：</dt><dd>{{ birthdate }}</dd>
-            <dt>籍贯：</dt><dd>{{ nativePlace }}</dd>
-        </dl>
+<body class="grey lighten-4">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m8 offset-m2">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title center">您好, {{ username }}</span>
+            <ul class="collection">
+              <li class="collection-item"><strong>邮箱:</strong> {{ email }}</li>
+              <li class="collection-item"><strong>QQ:</strong> {{ qq }}</li>
+              <li class="collection-item"><strong>性别:</strong> {{ gender }}</li>
+              <li class="collection-item"><strong>出生日期:</strong> {{ birthdate }}</li>
+              <li class="collection-item"><strong>籍贯:</strong> {{ nativePlace }}</li>
+              <li class="collection-item"><strong>注册时间:</strong> {{ regdate }}</li>
+              <li class="collection-item"><strong>最后登录:</strong> {{ lastlogin }}</li>
+              <li class="collection-item"><strong>登录次数:</strong> {{ logintimes }}</li>
+
+            </ul>
+          </div>
+          <div class="card-action center">
+            <a href="{% url 'login' %}">退出登录</a>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <script src="{% static 'materialize.min.js' %}"></script>
 </body>
 </html>
