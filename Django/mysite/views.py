@@ -1,7 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # 正确的导入方式
 from datetime import datetime
+from userModel.models import regUser
 # 掌握基本模板变量的语法
 def myname(request):
     context          = {}
@@ -58,22 +59,25 @@ def getpara(request):
 
 
 def user_profile(request):
-    context          = {} #空字典
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
     try:
-        if 'novel' in request.GET and request.GET['novel']:
-            novel = request.GET['novel']  # 接收参数类型是string
-            if novel=="西游记":             
-                context["username"] = "孙悟空"
-            elif novel=="三国演义":             
-                context["username"] = "诸葛亮"
-              
-            else:
-                context["username"] = "pu peng"
-             
-            context["dteDate"] = datetime.now()                     
-    except Exception:
-        msg= "<font color='red'>Exception occur!!!!!!!!!!</font>"
-    return render(request, "user_profile.html", context)#通过字典给模板网页传递数据
-      
-  
-    
+        user = regUser.objects.get(id=user_id)
+    except regUser.DoesNotExist:
+        return redirect('login')
+    context = {
+        'username': user.username,
+        'email': user.email,
+        'regdate': user.regdate,
+        'lastlogin': user.lastlogin,
+        'logintimes': user.logintimes,
+        'qq': user.qq,
+        'gender': user.gender,
+        'birthdate': user.birthdate,
+        'nativePlace': user.nativePlace
+    }
+    return render(request, "user_profile.html", context)
+
+
+

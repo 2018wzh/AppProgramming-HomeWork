@@ -122,10 +122,11 @@ def login_withORM(request):
       if not check_password(request.POST['password'],user.password):
         return render(request, 'login.html', {'error': '密码不正确'})        
         # 4. 更新最后登录时间
-      user.logintimes = user.logintimes+1234
+      user.logintimes = user.logintimes+1
       user.lastlogin = datetime.now()
       user.save(update_fields=['logintimes','lastlogin'])   #掌握ORM更新的方法
       print("login success")
-      return HttpResponse("<p>登录成功！</p>")               
+      #return HttpResponse("<p>登录成功！</p>")               
+      return render(request,'user_profile.html', {'username': user.username, 'email': user.email, 'regdate': user.regdate, 'lastlogin': user.lastlogin, 'logintimes': user.logintimes})
    else:
       return render(request, 'login.html', {'error': '请不用使用爬虫！'})      
