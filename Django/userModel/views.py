@@ -54,12 +54,13 @@ def getInsertRegSQLAndDict(request):
             ctx['birthdate'] = request.POST['birthdate']
             ctx['nativePlace'] = request.POST['nativePlace']
             ctx['regdate'] =datetime.now() 
-            ctx['logintimes'] =0
-            strSQL="insert into usermodel_reguser(username,email,password,gender,birthdate,nativePlace,regdate,logintimes)values('%s','%s','%s','%s','%s','%s','%s',%s)"%(
-                ctx['username'],ctx['email'],ctx['password'],ctx['gender'],
-                ctx['birthdate'],ctx['nativePlace'],ctx['regdate'] ,ctx['logintimes']
-            )   
-            print(strSQL) #控制台打印输出,这个不会在WEB页输出的！！！！！！！！
+            ctx['logintimes'] = 0
+            ctx['lastlogin'] = datetime.now()  # 增加一个字段，记录用户最后登录时间
+            strSQL = "insert into usermodel_reguser(username,email,password,gender,birthdate,nativePlace,regdate,lastlogin,logintimes)values('%s','%s','%s','%s','%s','%s','%s',%s,%s)" % (
+                ctx['username'], ctx['email'], ctx['password'], ctx['gender'],
+                ctx['birthdate'], ctx['nativePlace'], ctx['regdate'], ctx['lastlogin'], ctx['logintimes']
+            )
+            print(strSQL)  # 控制台打印输出,这个不会在WEB页输出的！！！！！！！！
     else:
          strSQL=""
     return strSQL,ctx
