@@ -26,7 +26,6 @@ namespace HW
         private void InitializeEventHandlers()
         {
             buttonClear.Click += ButtonClear_Click!;
-            buttonExample.Click += ButtonExample_Click!;
         }
 
         private async void buttonRun_Click(object sender, EventArgs e)
@@ -229,11 +228,6 @@ namespace HW
         {
             textBoxOutput.Clear();
             treeViewResult.Nodes.Clear();
-        }
-
-        private void ButtonExample_Click(object sender, EventArgs e)
-        {
-            textBoxInput.Text = "北京大学是中国著名的高等学府，位于北京市海淀区。马云是阿里巴巴集团的创始人。";
         }
 
     }
