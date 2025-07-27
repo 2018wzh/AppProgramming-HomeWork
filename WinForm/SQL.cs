@@ -71,7 +71,7 @@ namespace HW
                 "手机",
                 "省份",
                 "登录次数",
-                "qq",
+                "QQ",
                 "邮箱"
             };
             comboBoxData.DataSource = classNames;
@@ -123,7 +123,7 @@ namespace HW
 
             if (filterField == "全部显示")
             {
-                sql += string.Format(" and (studentNo like '%{0}%' or studentname like '%{0}%' or Major like '%{0}%' or Intro like '%{0}%' or Phone like '%{0}%' or Province like '%{0}%' or QQ like '%{0}%' or email like '%{0}%')", filterValue);
+                sql += string.Format(" and (studentNo like '%{0}%' or studentname like '%{0}%' or Major like '%{0}%' or Intro like '%{0}%' or Phone like '%{0}%' or Province like '%{0}%' or qq like '%{0}%' or email like '%{0}%')", filterValue);
             }
             else
             {
@@ -151,8 +151,8 @@ namespace HW
                     case "登录次数":
                         dbField = "LoginTimes";
                         break;
-                    case "qq":
-                        dbField = "QQ";
+                    case "QQ":
+                        dbField = "qq";
                         break;
                     case "邮箱":
                         dbField = "email";
@@ -230,7 +230,7 @@ namespace HW
                         case "简介": dbField = "Intro"; currentValue = row.Cells["简介"].Value.ToString(); break;
                         case "手机": dbField = "Phone"; currentValue = row.Cells["手机"].Value.ToString(); break;
                         case "省份": dbField = "Province"; currentValue = row.Cells["省份"].Value.ToString(); break;
-                        case "qq": dbField = "qq"; currentValue = row.Cells["qq"].Value.ToString(); break;
+                        case "QQ": dbField = "qq"; currentValue = row.Cells["qq"].Value.ToString(); break;
                         case "邮箱": dbField = "email"; currentValue = row.Cells["邮箱"].Value.ToString(); break;
                     }
 
