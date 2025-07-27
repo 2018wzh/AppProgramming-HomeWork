@@ -50,7 +50,7 @@ namespace SQL
 			{
 				///创建数据库连接
 				myConnection = new SqlConnection(
-					$"Data Source={address};Initial Catalog={dbname};User ID={username};Password={password};");
+					$"Data Source={address};Initial Catalog={dbname};User ID={username};Password={password};TrustServerCertificate=True;");
 			}
 			else if (myConnection.State == ConnectionState.Broken)
 			{
